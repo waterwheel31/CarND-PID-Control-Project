@@ -1,49 +1,55 @@
 
 # PID Controller Project
 
+![img](./capture.gif)
 
 ## Background and Objectve
 
 This is try to control sterring of a vehilce using PID controller. 
 PID stands for (P: Propotional, I: Integral, D: Differential). The idea is to control vehicle/robot actuator (sterring for this case) in proportinal to following 3 inputs.
 
-- Gap from the to-be route (called Cross Tracking Error)  -- P 
+- Gap from the to-be route (Cross Tracking Error(CTE))  -- P 
 - Differential of the Cross Tracking Error -- D
 - Accumulative sum of the Cross Tracking Error -- I 
 
 In short, the PID formula is as below: 
 
 ![img](./pid.png)
+(source: Udacity)
+
+Here alha is the target control. For this case, the angle of sterring. 
+If the coefficient for each of P, I, D is set properly, the vehicle can run appropriately. 
 
 
 
+## Approach
 
-## Approahch 
+- The coefficients are esiamted by Twiddle approach. That is, iteratively adjusting the coefficients by seeing the change of the Cross Tracking Error, and differential and itntegral of that. 
+- To make the iteration robust. Adjusted the coeffcients one by one, starting from P, then D, and I in the end. 
 
-- Used following parameters as the coeffcients of the PID controller. 
+- As a result, following coeffcients are set for the PID controller. 
     - P  0.61
     - I: 00001
     - D: 1.20
 
-- The coefficients are esiamted by Twiddle approach. That is, iteratively adjusting the coefficients by seeing the change of the Cross Tracking Error
-    - To make the iteration robust. Adjusted the coeffcients one by one, starting from P, then D, and I in the end. 
-
 - Throttle that controls the speed was fixed as a constant 
 
 
-
 ## Results 
-
-- The vehicle 
-
-
-
+- See the <a href ="/caputre.mp4"> video </a>
+- The vehicle could run a course of in Virtual Environment (Unity) without going out of the course, for moderate speed (around 25 mph)
+- However, still there are some spaces to improve, and especially this can be smoother. To do so, some smoothing filter can be applied. 
 
 
 
 
 
 
+
+
+
+<br><br>
+<hr>
 
 ## Dependencies
 
