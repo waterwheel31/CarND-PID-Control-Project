@@ -1,5 +1,7 @@
 #ifndef PID_H
 #define PID_H
+#include <limits>
+#include <vector>
 
 class PID {
  public:
@@ -17,7 +19,7 @@ class PID {
    * Initialize PID.
    * @param (Kp_, Ki_, Kd_) The initial PID coefficients
    */
-  void Init(double Kp_, double Ki_, double Kd_);
+  void Init(double Kp_, double Ki_, double Kd_, bool p_tra, bool i_tra, bool d_tra);
 
   /**
    * Update the PID error variables given cross track error.
@@ -30,6 +32,8 @@ class PID {
    * @output The total PID error
    */
   double TotalError();
+  
+  void UpdateCoefficients(double cte);
 
  private:
   /**
@@ -38,13 +42,24 @@ class PID {
   double p_error;
   double i_error;
   double d_error;
-
+  
   /**
    * PID Coefficients
    */ 
-  double Kp;
-  double Ki;
-  double Kd;
+  std::vector <double> p; 
+  std::vector <double> dp; 
+  
+  int cnt = 0;
+  int cnt2 = 0;
+  double torrelance = 0.0001; 
+  
+  bool p_train;
+  bool i_train; 
+  bool d_train; 
+  
+  float min_cte = std::numeric_limits<float>::infinity();
+  float min_cte_diff = std::numeric_limits<float>::infinity();
+  float min_cte_i = std::numeric_limits<float>::infinity();
 };
 
 #endif  // PID_H
